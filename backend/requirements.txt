@@ -1,0 +1,24 @@
+# VoiceGuard — CORE dependencies (light, pure-Python wheels only).
+#
+# This set is deliberately tiny so it installs on ANY machine with Python 3.10+
+# without a compiler, without ffmpeg and without a GPU. Every package here ships
+# a prebuilt wheel for CPython 3.10 - 3.14 on Windows / macOS / Linux.
+#
+#   pip install -r backend/requirements.txt
+#
+# NOTE: librosa / numba / scipy / matplotlib are intentionally NOT here.
+#       They are the #1 source of "pip install failed" on a teammate's machine
+#       (numba lags new Python releases by months). All DSP in this project is
+#       implemented with plain numpy instead. See requirements-ml.txt for the
+#       optional heavy ML stack.
+
+fastapi==0.141.1
+uvicorn==0.52.4
+python-multipart==0.0.32
+pydantic==2.13.5
+soundfile==0.14.0
+
+# numpy is pinned per Python version because a single release cannot cover
+# 3.10 through 3.14 (numpy >= 2.3 dropped 3.10). Both pins are exact.
+numpy==1.26.4 ; python_version < "3.11"
+numpy==2.3.5  ; python_version >= "3.11"

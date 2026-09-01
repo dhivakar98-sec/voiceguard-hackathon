@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.Python
+
+# VoiceGuard
+backend/models/*
+!backend/models/.gitkeep
+*.log
+uploads/
+tmp/
+
+# Datasets / checkpoints (never commit these)
+data/
+datasets/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Node (only if you use the optional React frontend)
+node_modules/
+frontend-react/dist/
+
+# Editors / OS junk / local agent settings
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

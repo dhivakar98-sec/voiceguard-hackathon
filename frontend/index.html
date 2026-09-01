@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VoiceGuard — AI Voice Clone Detector</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🛡️</span>
+      <div>
+        <h1>VoiceGuard</h1>
+        <p class="tagline">Is this voice a real human — or an AI clone?</p>
+      </div>
+    </div>
+    <div class="engine" id="engine" title="Which detector is loaded">
+      <span class="dot" id="engineDot"></span>
+      <span id="engineText">checking engine…</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ---------------------------------------------------------- upload -->
+    <section class="card">
+      <div id="drop" class="drop" tabindex="0" role="button"
+           aria-label="Upload an audio file: drag and drop, or press Enter to browse">
+        <input type="file" id="fileInput" accept=".wav,.mp3,.flac,.m4a,.ogg,.oga,.opus,.aiff,.aif,audio/*" hidden />
+        <div class="drop-inner">
+          <svg class="drop-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" />
+            <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+          </svg>
+          <p class="drop-title">Drop an audio clip here</p>
+          <p class="drop-sub">or <span class="link">browse your files</span></p>
+          <p class="drop-hint">wav · flac · ogg · mp3 work out of the box · m4a needs ffmpeg</p>
+        </div>
+      </div>
+
+      <div id="fileRow" class="file-row" hidden>
+        <span class="file-icon" aria-hidden="true">🎧</span>
+        <div class="file-meta">
+          <span class="file-name" id="fileName"></span>
+          <span class="file-size" id="fileSize"></span>
+        </div>
+        <audio id="player" controls preload="metadata"></audio>
+        <button type="button" class="clear" id="clearBtn" title="Remove file">✕</button>
+      </div>
+
+      <button id="analyzeBtn" class="analyze" disabled>
+        <span class="spinner" hidden></span>
+        <span class="label">Analyze audio</span>
+      </button>
+
+      <p class="samples" id="samples" hidden>
+        Try a sample: <span id="sampleLinks"></span>
+      </p>
+    </section>
+
+    <!-- ----------------------------------------------------------- error -->
+    <section class="card error" id="errorCard" hidden>
+      <span class="err-icon" aria-hidden="true">⚠️</span>
+      <div>
+        <h3>Could not analyze that file</h3>
+        <p id="errorText"></p>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------- result -->
+    <section class="card result" id="resultCard" hidden>
+      <div class="verdict-row">
+        <div class="verdict" id="verdictBadge">
+          <span class="verdict-emoji" id="verdictEmoji"></span>
+          <span class="verdict-text" id="verdictText"></span>
+        </div>
+        <div class="conf">
+          <div class="conf-top">
+            <span>Confidence</span>
+            <strong><span id="confValue">0</span><span class="of">/100</span></strong>
+          </div>
+          <div class="bar"><div class="bar-fill" id="confBar"></div></div>
+          <p class="conf-sub" id="confSub"></p>
+        </div>
+      </div>
+
+      <ul class="facts">
+        <li><span>Spoof probability</span><strong id="factProb">–</strong></li>
+        <li><span>Threshold</span><strong id="factThr">–</strong></li>
+        <li><span>Peak window</span><strong id="factPeak">–</strong></li>
+        <li><span>Analyzed</span><strong id="factDur">–</strong></li>
+        <li><span>Engine</span><strong id="factBackend">–</strong></li>
+        <li><span>Latency</span><strong id="factMs">–</strong></li>
+      </ul>
+
+      <div id="warnBox" class="warn" hidden>
+        <span aria-hidden="true">⚠️</span>
+        <ul id="warnings"></ul>
+      </div>
+
+      <div id="reasonsBox" hidden>
+        <h4>What the detector reacted to</h4>
+        <ul class="reasons" id="reasons"></ul>
+      </div>
+
+      <div id="specBox" hidden>
+        <h4>Spectrogram</h4>
+        <img id="spec" alt="Spectrogram of the analyzed audio" />
+      </div>
+
+      <div id="segBox" hidden>
+        <h4>Per-segment spoof probability</h4>
+        <div class="segments" id="segments"></div>
+      </div>
+
+      <p class="note" id="note"></p>
+    </section>
+
+    <p class="foot">
+      SIH26104 · VoiceGuard MVP · verdicts are strong evidence, not proof —
+      always second-check a high-stakes decision.
+    </p>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

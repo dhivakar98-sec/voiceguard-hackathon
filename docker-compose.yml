@@ -1,0 +1,29 @@
+# VoiceGuard — `docker compose up` is the entire process.
+# Then open http://localhost:8000
+#
+# To include the pretrained ML model in the image (bigger build, needs internet):
+#   docker compose build --build-arg WITH_ML=true && docker compose up
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        WITH_ML: "${WITH_ML:-false}"
+    image: voiceguard:latest
+    container_name: voiceguard
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      # auto | ml | heuristic
+      VG_DETECTOR_MODE: "${VG_DETECTOR_MODE:-auto}"
+      VG_THRESHOLD: "${VG_THRESHOLD:-0.5}"
+    volumes:
+      # Drop clips in ./sample_audio on the host and they show up in the app.
+      - ./sample_audio:/app/sample_audio:ro
+      # Persist downloaded model weights between runs.
+      - hf-cache:/home/app/.cache/huggingface
+    restart: unless-stopped
+
+volumes:
+  hf-cache:
