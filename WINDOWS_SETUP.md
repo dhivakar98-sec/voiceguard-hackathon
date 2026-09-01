@@ -8,6 +8,24 @@ including the real ML detection model.
 
 ---
 
+## Shortcut: just run `run.bat`
+
+Steps 5-7 below are the manual version of what `run.bat` already does for you
+(create the venv, install the core deps, start the server). After Step 4:
+
+```bat
+run.bat
+```
+
+Then open <http://localhost:8000>. `run.bat` also detects a broken Python
+install and falls back to `uv`, which the manual steps do not. Use the manual
+route only if you want to see each step, or if `run.bat` fails and you are
+diagnosing it.
+
+Either way, add the ML model afterwards with Step 6's `requirements-ml.txt` line.
+
+---
+
 ## Step 1 — Install Python, ffmpeg, and Git
 
 Open **Command Prompt as Administrator** and paste:
@@ -46,16 +64,15 @@ reinstall Python with the **"Add Python to PATH"** box ticked.
 
 ## Step 4 — Clone the project and enter the folder
 
-Go to where you want the project to live, then clone it. **Replace the URL** with your
-repo's link (the green **Code** button on the GitHub page gives you this):
+Go to where you want the project to live, then clone it. this is the real repo URL:
 
 ```bat
 cd C:\Users\%USERNAME%\Downloads
-git clone https://github.com/YOURNAME/voiceguard.git
-cd voiceguard
+git clone https://github.com/dhivakar98-sec/voiceguard-hackathon.git
+cd voiceguard-hackathon
 ```
 
-Everything after this runs from **inside the `voiceguard` folder**.
+Everything after this runs from **inside the `voiceguard-hackathon` folder**.
 
 ---
 
@@ -92,7 +109,7 @@ pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
 ## Step 7 — Start the app
 
 ```bat
-python -m uvicorn main:app --app-dir backend --host 0.0.0.0 --port 8000
+python -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000
 ```
 
 Leave this window open — it's the running server.
@@ -124,9 +141,9 @@ Recheck that Step 6 completed with no errors and that you had internet on the fi
 **Run it again another day** (skip the install steps):
 
 ```bat
-cd C:\Users\%USERNAME%\Downloads\voiceguard
+cd C:\Users\%USERNAME%\Downloads\voiceguard-hackathon
 .venv\Scripts\activate.bat
-python -m uvicorn main:app --app-dir backend --host 0.0.0.0 --port 8000
+python -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000
 ```
 
 **Get the latest code later:**
