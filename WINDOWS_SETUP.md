@@ -114,7 +114,7 @@ python -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000
 
 Leave this window open — it's the running server.
 
-> **First start downloads the detection model** (a few hundred MB up to ~1 GB) and
+> **First start downloads the detection model** (378 MB) and
 > needs internet that one time. After that it's cached and runs offline.
 
 ---

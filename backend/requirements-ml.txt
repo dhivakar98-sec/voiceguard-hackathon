@@ -1,4 +1,6 @@
-# VoiceGuard — OPTIONAL ML dependencies (heavy: ~1 GB download for torch).
+# VoiceGuard — OPTIONAL ML dependencies (~400 MB of packages; the torch wheel
+# is 122 MB on Windows / ~70 MB on macOS arm64. The CUDA extras are Linux-only,
+# so Windows and macOS get the CPU build automatically).
 #
 # You do NOT need this to run the app. Without it VoiceGuard runs on the
 # built-in numpy heuristic detector and still returns HUMAN / FAKE verdicts.
@@ -9,7 +11,8 @@
 #   Windows       :  .venv\Scripts\pip install -r backend/requirements-ml.txt
 #
 # Then restart the server. GET /api/health should report  "backend": "ml".
-# First start downloads ~380 MB of model weights (cached in ~/.cache/huggingface).
+# First start downloads 378 MB of model weights (cached in ~/.cache/huggingface
+# on macOS/Linux, %USERPROFILE%\.cache\huggingface on Windows).
 #
 # torchaudio is NOT required — VoiceGuard decodes audio with soundfile.
 

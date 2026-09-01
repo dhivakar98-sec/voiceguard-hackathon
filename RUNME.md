@@ -50,7 +50,7 @@ The badge in the top-right corner tells you which one is live.
 | **heuristic** | default — needs nothing but the core install | Works, but it is a signal heuristic. Fine for a smoke test, not evidence. |
 | **ml** | after you install the optional ML deps | The real pretrained deepfake detector. Use this for the demo. |
 
-**Turn on the ML engine** (≈1 GB download, needs internet once):
+**Turn on the ML engine** (~400 MB of packages + a 378 MB model, needs internet once):
 
 ```bash
 # macOS / Linux
@@ -63,7 +63,7 @@ run.bat
 ```
 
 Check it worked: <http://localhost:8000/api/health> should say `"backend": "ml"`.
-The first start after installing also downloads the model weights (~400 MB), so
+The first start after installing also downloads the model weights (378 MB), so
 give it a minute — the page stays usable and shows "loading detector…".
 
 ---

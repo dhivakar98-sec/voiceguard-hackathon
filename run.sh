@@ -94,7 +94,7 @@ if "$VPY" -c 'import torch, transformers' >/dev/null 2>&1; then
   say "ML deps detected — the pretrained deepfake model will be used."
 else
   say "ML deps not installed — running on the built-in heuristic detector (fully working).
-    To enable the pretrained ML model (~1 GB download):
+    To enable the pretrained ML model (~400 MB packages + a 378 MB model):
       $VENV/bin/pip install -r backend/requirements-ml.txt"
 fi
 

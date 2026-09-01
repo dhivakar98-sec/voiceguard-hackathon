@@ -87,7 +87,7 @@ goto :serve
 
 :no_ml_msg
 echo       ML deps not installed - running on the built-in heuristic detector.
-echo       This works. To enable the pretrained ML model ^(~1 GB download^):
+echo       This works. To enable the pretrained ML model ^(~400 MB + 378 MB model^):
 echo         %VPY% -m pip install -r backend\requirements-ml.txt
 
 REM -------------------------------------------------------------- 4. serve --
