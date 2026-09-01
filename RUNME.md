@@ -16,6 +16,14 @@ run.bat
 
 Then open **<http://localhost:8000>** and upload an audio clip.
 
+Not sure it worked? This proves the whole thing end to end and says exactly what
+failed if anything did:
+
+```bash
+.venv/bin/python backend/selftest.py          # macOS / Linux
+.venv\Scripts\python backend\selftest.py     # Windows
+```
+
 ### Option B — Docker (if Option A gives you any trouble)
 
 ```bash
@@ -70,11 +78,14 @@ give it a minute — the page stays usable and shows "loading detector…".
 | Port 8000 is busy | `PORT=8080 ./run.sh` (macOS/Linux) or `set PORT=8080 && run.bat` (Windows). |
 | An `.m4a` upload is rejected | Only m4a/aac need ffmpeg. Use a `.wav`/`.mp3`/`.flac`/`.ogg`, or install ffmpeg (`brew install ffmpeg` / `choco install ffmpeg` / `apt install ffmpeg`). Docker already has it. |
 | Badge says "backend offline" | The server is not running — check the terminal where you started it. |
+| Windows: Microsoft Store opens instead of Python | Python is not really installed. Get it from python.org and tick **"Add python.exe to PATH"**. |
+| Windows firewall prompt | Shouldn't appear — the server binds `127.0.0.1` by default. Only `HOST=0.0.0.0` triggers it. |
 
 ## Useful environment variables
 
 ```bash
 PORT=8080                     # different port
+HOST=0.0.0.0                  # reach the app from another device (firewall may prompt)
 VG_DETECTOR_MODE=heuristic    # never load the ML model (fast start, fully offline)
 VG_DETECTOR_MODE=ml           # complain loudly if the ML model cannot load
 VG_THRESHOLD=0.45             # spoof probability above which the verdict is FAKE

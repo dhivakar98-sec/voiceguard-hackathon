@@ -14,6 +14,9 @@ set -u
 cd "$(dirname "$0")" || exit 1
 
 PORT="${PORT:-8000}"
+# 127.0.0.1 keeps the OS firewall quiet. Set HOST=0.0.0.0 to reach the app
+# from another device on your network.
+HOST="${HOST:-127.0.0.1}"
 VENV=".venv"
 say() { printf '\n\033[1;36m==>\033[0m %s\n' "$1"; }
 fail() { printf '\n\033[1;31mX\033[0m %s\n\n' "$1"; exit 1; }
@@ -98,4 +101,4 @@ fi
 # ----------------------------------------------------------------- 5. serve --
 say "Starting VoiceGuard on http://localhost:$PORT   (press Ctrl+C to stop)"
 echo
-exec "$VPY" -m uvicorn main:app --app-dir backend --host "${HOST:-0.0.0.0}" --port "$PORT"
+exec "$VPY" -m uvicorn main:app --app-dir backend --host "$HOST" --port "$PORT"

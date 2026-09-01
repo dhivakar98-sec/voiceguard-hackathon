@@ -220,8 +220,26 @@ Config, all env-overridable: `VG_DETECTOR_MODE`, `VG_MODEL_ID`, `VG_THRESHOLD`,
 cache volume) but the image has not been built. Run `docker compose up` once on a
 machine that has Docker before relying on Option B in front of judges.
 
-`run.bat` was likewise not executed (no Windows machine); it mirrors `run.sh`
-step for step in plain `cmd` syntax.
+`run.bat` was likewise **not executed** (no Windows machine). It mirrors `run.sh`
+step for step and was statically audited; the audit found and fixed three real
+bugs, so treat the first Windows run as the actual test:
+
+* **`)` inside a quoted string inside a `( )` block.** `cmd` mis-parses
+  `python -c "... sys.version_info >= (3,10) ..."` when it sits inside a
+  parenthesised `for`/`if` block — the classic silent batch failure. Every
+  probe now lives in a `call :label` subroutine and the script contains **no
+  multi-line `( )` blocks at all**.
+* **`python3` triggering the Microsoft Store.** On Windows without Python,
+  bare `python`/`python3` are Store stubs that open the Store instead of
+  failing. Probe order is now `py -3` → `py` → `python`, and `python3` was
+  dropped.
+* **No uv fallback (parity gap with `run.sh`).** A Python whose pip bootstrap
+  is broken dead-ended on Windows. `run.bat` now checks that the venv's pip
+  actually runs and falls back to `uv` exactly like `run.sh`.
+
+Both scripts now bind `127.0.0.1` by default instead of `0.0.0.0`, so neither
+OS raises a firewall prompt that a teammate could accidentally block and read as
+"the app is broken". `HOST=0.0.0.0` re-enables LAN access.
 
 One machine-specific note: the Homebrew Python 3.14 on the build machine has a
 broken `pyexpat`, which makes `python3 -m venv` fail inside `ensurepip`. That is
